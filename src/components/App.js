@@ -18,7 +18,7 @@ function App() {
   const [eventData, setEventData] = useState({ title: '', location: '' });
 
   const handleSelectSlot = ({ start }) => {
-    if (popupOpen) setPopupOpen(false); // close previous overlay if open
+    if (popupOpen) setPopupOpen(false);
     setSelectedDate(start);
     setEditEventData(null);
     setEventData({ title: '', location: '' });
@@ -47,8 +47,6 @@ function App() {
       };
       dispatch(addEvent(newEvent));
     }
-
-    // allow overlay to close before next click
     setTimeout(() => setPopupOpen(false), 200);
   };
 
@@ -86,16 +84,16 @@ function App() {
     <div className="App">
       <h1>Event Tracker Calendar</h1>
 
-      {/* Add Event Button (Required by Cypress) */}
-      <button className="btn" onClick={() => {
-        if (popupOpen) setPopupOpen(false);
-        setSelectedDate(new Date());
-        setEditEventData(null);
-        setEventData({ title: '', location: '' });
-        setTimeout(() => setPopupOpen(true), 100);
-      }}>Add Event</button>
-
+      {/* All 4 Buttons in same container for Cypress */}
       <div className="filter-buttons">
+        <button className="btn" onClick={() => {
+          if (popupOpen) setPopupOpen(false);
+          setSelectedDate(new Date());
+          setEditEventData(null);
+          setEventData({ title: '', location: '' });
+          setTimeout(() => setPopupOpen(true), 100);
+        }}>Add Event</button>
+
         <button className="btn" onClick={() => dispatch(setFilter('all'))}>All</button>
         <button className="btn" onClick={() => dispatch(setFilter('past'))}>Past</button>
         <button className="btn" onClick={() => dispatch(setFilter('upcoming'))}>Upcoming</button>
