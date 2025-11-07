@@ -1,9 +1,9 @@
-
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
-import Popup from "react-popup";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 import { setFilter, addEvent, editEvent, deleteEvent } from "./redux/actions";
 
 const localizer = momentLocalizer(moment);
@@ -63,6 +63,7 @@ export default function App() {
 
   return (
     <div className="App">
+      {/* === Four Buttons === */}
       <div>
         <button
           className="btn"
@@ -96,6 +97,7 @@ export default function App() {
         </button>
       </div>
 
+      {/* === Calendar === */}
       <h1 style={{ marginTop: "30px" }}>Event Tracker Calendar</h1>
 
       <Calendar
@@ -110,34 +112,39 @@ export default function App() {
         eventPropGetter={eventPropGetter}
       />
 
-      {popupOpen && (
-        <Popup open={popupOpen} onClose={() => setPopupOpen(false)} position="right center">
-          <div>
-            <h3>{editEventData ? "Edit Event" : "Create Event"}</h3>
-            <input
-              placeholder="Event Title"
-              value={eventData.title}
-              onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
-            />
-            <input
-              placeholder="Event Location"
-              value={eventData.location}
-              onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
-            />
-            <div className="mm-popup__box__footer__right-space">
-              <button className="mm-popup__btn" onClick={handleSaveEvent}>
-                Save
-              </button>
-            </div>
-            {editEventData && (
-              <>
-                <button className="mm-popup__btn--info" onClick={handleSaveEvent}>Edit</button>
-                <button className="mm-popup__btn--danger" onClick={handleDeleteEvent}>Delete</button>
-              </>
-            )}
+      {/* === Popup Modal === */}
+      <Popup open={popupOpen} onClose={() => setPopupOpen(false)} position="right center">
+        <div style={{ padding: "10px", background: "white", borderRadius: "10px" }}>
+          <h3>{editEventData ? "Edit Event" : "Create Event"}</h3>
+          <input
+            placeholder="Event Title"
+            value={eventData.title}
+            onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
+            style={{ display: "block", marginBottom: "10px", width: "100%" }}
+          />
+          <input
+            placeholder="Event Location"
+            value={eventData.location}
+            onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
+            style={{ display: "block", marginBottom: "10px", width: "100%" }}
+          />
+          <div className="mm-popup__box__footer__right-space">
+            <button className="mm-popup__btn" onClick={handleSaveEvent}>
+              Save
+            </button>
           </div>
-        </Popup>
-      )}
+          {editEventData && (
+            <>
+              <button className="mm-popup__btn--info" onClick={handleSaveEvent}>
+                Edit
+              </button>
+              <button className="mm-popup__btn--danger" onClick={handleDeleteEvent}>
+                Delete
+              </button>
+            </>
+          )}
+        </div>
+      </Popup>
     </div>
   );
 }
