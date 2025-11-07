@@ -82,20 +82,18 @@ function App() {
 
   return (
     <div className="App">
-      {/* All four buttons as direct siblings for Cypress */}
-      <div className="filter-buttons">
-        <button className="btn" onClick={() => {
-          if (popupOpen) setPopupOpen(false);
-          setSelectedDate(new Date());
-          setEditEventData(null);
-          setEventData({ title: '', location: '' });
-          setTimeout(() => setPopupOpen(true), 100);
-        }}>Add Event</button>
+      {/* Cypress expects buttons directly under .App */}
+      <button className="btn" onClick={() => {
+        if (popupOpen) setPopupOpen(false);
+        setSelectedDate(new Date());
+        setEditEventData(null);
+        setEventData({ title: '', location: '' });
+        setTimeout(() => setPopupOpen(true), 100);
+      }}>Add Event</button>
 
-        <button className="btn" onClick={() => dispatch(setFilter('all'))}>All</button>
-        <button className="btn" onClick={() => dispatch(setFilter('past'))}>Past</button>
-        <button className="btn" onClick={() => dispatch(setFilter('upcoming'))}>Upcoming</button>
-      </div>
+      <button className="btn" onClick={() => dispatch(setFilter('all'))}>All</button>
+      <button className="btn" onClick={() => dispatch(setFilter('past'))}>Past</button>
+      <button className="btn" onClick={() => dispatch(setFilter('upcoming'))}>Upcoming</button>
 
       <h1 style={{ marginTop: '30px' }}>Event Tracker Calendar</h1>
 
