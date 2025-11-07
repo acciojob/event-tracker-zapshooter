@@ -40,8 +40,8 @@ function App() {
         id: Date.now(),
         title: eventData.title,
         location: eventData.location,
-        start: selectedDate,
-        end: selectedDate,
+        start: selectedDate || new Date(),
+        end: selectedDate || new Date(),
       };
       dispatch(addEvent(newEvent));
     }
@@ -81,6 +81,15 @@ function App() {
   return (
     <div className="App">
       <h1>Event Tracker Calendar</h1>
+
+      {/* Add Event Button (Required by Cypress) */}
+      <button className="btn" onClick={() => { 
+        setSelectedDate(new Date()); 
+        setEditEventData(null); 
+        setEventData({ title: '', location: '' }); 
+        setPopupOpen(true); 
+      }}>Add Event</button>
+
       <div className="filter-buttons">
         <button className="btn" onClick={() => dispatch(setFilter('all'))}>All</button>
         <button className="btn" onClick={() => dispatch(setFilter('past'))}>Past</button>
