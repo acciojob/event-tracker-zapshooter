@@ -18,16 +18,18 @@ function App() {
   const [eventData, setEventData] = useState({ title: '', location: '' });
 
   const handleSelectSlot = ({ start }) => {
+    if (popupOpen) setPopupOpen(false); // close previous overlay if open
     setSelectedDate(start);
     setEditEventData(null);
     setEventData({ title: '', location: '' });
-    setPopupOpen(true);
+    setTimeout(() => setPopupOpen(true), 100);
   };
 
   const handleSelectEvent = (event) => {
+    if (popupOpen) setPopupOpen(false);
     setEditEventData(event);
     setEventData({ title: event.title, location: event.location });
-    setPopupOpen(true);
+    setTimeout(() => setPopupOpen(true), 100);
   };
 
   const handleSave = () => {
@@ -45,13 +47,15 @@ function App() {
       };
       dispatch(addEvent(newEvent));
     }
-    setPopupOpen(false);
+
+    // allow overlay to close before next click
+    setTimeout(() => setPopupOpen(false), 200);
   };
 
   const handleDelete = () => {
     if (editEventData) {
       dispatch(deleteEvent(editEventData.id));
-      setPopupOpen(false);
+      setTimeout(() => setPopupOpen(false), 200);
     }
   };
 
@@ -83,11 +87,12 @@ function App() {
       <h1>Event Tracker Calendar</h1>
 
       {/* Add Event Button (Required by Cypress) */}
-      <button className="btn" onClick={() => { 
-        setSelectedDate(new Date()); 
-        setEditEventData(null); 
-        setEventData({ title: '', location: '' }); 
-        setPopupOpen(true); 
+      <button className="btn" onClick={() => {
+        if (popupOpen) setPopupOpen(false);
+        setSelectedDate(new Date());
+        setEditEventData(null);
+        setEventData({ title: '', location: '' });
+        setTimeout(() => setPopupOpen(true), 100);
       }}>Add Event</button>
 
       <div className="filter-buttons">
