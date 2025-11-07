@@ -82,9 +82,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Event Tracker Calendar</h1>
-
-      {/* All 4 Buttons in same container for Cypress */}
+      {/* All four buttons as direct siblings for Cypress */}
       <div className="filter-buttons">
         <button className="btn" onClick={() => {
           if (popupOpen) setPopupOpen(false);
@@ -98,6 +96,8 @@ function App() {
         <button className="btn" onClick={() => dispatch(setFilter('past'))}>Past</button>
         <button className="btn" onClick={() => dispatch(setFilter('upcoming'))}>Upcoming</button>
       </div>
+
+      <h1 style={{ marginTop: '30px' }}>Event Tracker Calendar</h1>
 
       <Calendar
         localizer={localizer}
